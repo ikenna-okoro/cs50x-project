@@ -1,0 +1,105 @@
+{% extends "/admin/layout.html" %}
+
+{% block title %}
+Admin - Home
+{% endblock %}
+
+{% block main %}
+
+
+<!-- ======================= Cards ================== -->
+<div class="cardBox">
+    <div class="card">
+        <div>
+            <div class="numbers">1,504</div>
+            <div class="cardName">Daily Views</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="eye-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <div class="numbers">80</div>
+            <div class="cardName">Sales</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="cart-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <div class="numbers">284</div>
+            <div class="cardName">Comments</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <div class="numbers">$7,842</div>
+            <div class="cardName">Earning</div>
+        </div>
+
+        <div class="iconBx">
+            <ion-icon name="cash-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+
+<!-- ================ Order Details List ================= -->
+<div class="details">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Recent Orders</h2>
+            <a href="#" class="btn">View All</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <td>S/N</td>
+                    <td>Customer ID</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Phone number</td>
+                    <td>Billing address</td>
+                    <td>Amount</td>
+                    <td>Date</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% if data %}
+                {% for entry in data %}
+                <tr>
+                    <td> {{ loop.index }} </td>
+                    <td> {{ entry.cust_id }} </td>
+                    <td> {{ entry.firstname}} {{ entry.lastname }} </td>
+                    <td> {{ entry.email }} </td>
+                    <td> {{ entry.phone_number }} </td>
+                    <td> {{ entry.address }} </td>
+                    <td> £{{ entry.total_cost }} </td>
+                    <td> {{ entry.date }} </td>
+                    <td><span class="status status delivered">{{ entry.status }}</span></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="6">No entries found</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

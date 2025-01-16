@@ -1,0 +1,287 @@
+/* =========== Google Fonts ============ */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap");
+
+/* =============== Globals ============== */
+* {
+    font-family: "Ubuntu", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #d42000;
+    --white: #fff;
+    --gray: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+    --orange: #ff9419;
+}
+
+
+
+
+body {
+    background-color:var(--black1);
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: 56px; /* Add padding equal to the height of the navbar */
+}
+
+
+/* Size for brand */
+nav .navbar-brand {
+    font-size: xx-large;
+}
+
+/* Colors for brand */
+nav .navbar-brand .blue {
+    color: #537fbe;
+}
+
+nav .navbar-brand .red {
+    color: #ea433b;
+}
+
+nav .navbar-brand .yellow {
+    color: #f5b82e;
+}
+
+nav .navbar-brand .green {
+    color: #2e944b;
+}
+
+nav .navbar-brand .orange {
+    color: #FFDAB9;
+}
+
+/* more styling (similar with admin dash board*/
+.navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays above other elements */
+}
+
+.navbar-nav li a .icon {
+    position: relative;
+    display: flex;
+    min-width: 30px;
+    height: 30px;
+    line-height: 75px;
+    text-align: center;
+}
+
+.navbar-nav li a .icon ion-icon {
+font-size: 1.75rem;
+} 
+
+.navbar-nav li {
+    display: flex;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.navbar-nav li a {
+    display: flex;
+}
+
+main {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    width: 100%;
+    background-color:var(--white);
+    min-height: 100vh;  
+}
+
+.nav-tabs li .nav-link {
+    color: var(--blue);
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+}
+
+.wall {
+    background-image: url('/static/home-banner.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 50%;
+    border-radius: 0px;
+}
+
+.list-group {
+    width: 100%;
+    margin-left: 10px;
+}
+
+/* ===== side navigation (bread, filling, sides) =====*/
+/* Change the background and text color of the active item */
+.list-group-item.active {
+    background-color: var(--blue); /* Deep Tomato Red */
+    color: white; /* Text color */
+    border-color: #ff3300; /* Optional: Adjust border */
+}
+
+/* Add hover effect for better interaction */
+.list-group-item.active:hover {
+    background-color: #ff4500; /* Slightly darker red */
+    color: white;
+}
+
+.list-group-item.active {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-card {
+    width: 300px; /* Set your desired width */
+}
+
+
+.credential {
+    background-color: #d42000; 
+    border-color:burlywood;
+}
+
+.credential:hover {
+    background-color: #FFDAB9;
+    border-color:var(--blue); 
+}
+
+
+/* ================== top link Menu items ========== */
+.bg-tomato {
+    background-color: var(--blue);
+    /* Deep Tomato Red */
+    color: white;
+    /* Optional for text contrast */
+}
+
+.bg-tomato a {
+    color: white;
+    /* Ensures links are readable */
+}
+
+.bg-tomato a:hover {
+    color: #FFDAB9;
+    /* Lighter shade for hover effect */
+}
+
+.card {
+    background-color:  #FFDAB9;
+}
+
+
+#list-item-1, #list-item-2,
+#list-item-3 {
+    width: 50%;
+    background-color: var(--blue);
+    color: var(--white);
+    position: relative;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex-start;
+}
+
+.intro {
+    display:flex;
+    justify-content:space-between;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
+    line-height: 2;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover {
+    background-color: #f5f5f5;
+    transition: color 2s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+#control-btns {
+    display: inline;
+}
+
+
+footer {
+    background-color: var(--blue);
+    width: 100%;
+    height:100pt;
+    margin-bottom: 0pt;
+    text-align: center;
+}
+
+footer {
+    color: white;
+}
+
+
+.user-form {
+    position:relative;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    margin-left: 20%;
+    margin-right: 20%; /* Remove default margins */
+    background-color: var(--black1);
+    width: 50%;
+    min-width:300px;
+    border-radius: 30px;
+    padding-top: 50px;
+}
+
+.validator-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.validate {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+  }
+  
+.validate .validate-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+

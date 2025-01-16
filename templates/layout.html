@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <!-- http://getbootstrap.com/docs/5.3/ -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    <link href="/static/favicon.ico" rel="icon">
+
+    <link href="/static/styles.css" rel="stylesheet">
+
+    <style>
+        div#myDIVS {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 100px;
+        }
+    </style>
+    <!-- script for tab toggling -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const detailsTab = document.querySelector("#profile-tab");
+            const detailsPane = document.querySelector("#profile-tab-pane");
+            const paymentPane = document.querySelector("#contact-tab-pane");
+
+            // Checkout button logic
+            document.getElementById("checkout-btn").addEventListener("click", function (event) {
+                event.preventDefault();
+
+                // Activate the "Your Details" tab and pane
+                const detailsTab = document.querySelector("#profile-tab");
+                const detailsPane = document.querySelector("#profile-tab-pane");
+
+                // Deactivate the "Your Order" tab and pane
+                document.querySelector("#home-tab").classList.remove("active");
+                document.querySelector("#home-tab-pane").classList.remove("show", "active");
+
+                // Activate "Your Details" tab and pane
+                detailsTab.classList.add("active");
+                detailsPane.classList.add("show", "active");
+            });
+
+            const proceedBtn = document.getElementById("proceed-btn");
+            const paymentTab = document.querySelector("#contact-tab");
+            const requiredFields = document.querySelectorAll("#profile-tab-pane input");
+
+            proceedBtn.disabled = true;
+            paymentTab.disabled = true;
+
+            // Enable proceed button if all required fields are filled
+            requiredFields.forEach((field) => {
+                field.addEventListener("input", function () {
+                    const allFilled = Array.from(requiredFields).every((input) => input.value.trim() !== "");
+                    proceedBtn.disabled = !allFilled;
+                });
+            });
+
+            // Prevent direct access to payment tab without completing details
+            document.querySelector("#profile-tab").addEventListener("click", function (event) {
+                event.preventDefault();
+                paymentTab.disabled = true;
+            });
+
+            // Handle "Proceed to Payment" button click
+            proceedBtn.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Gather form data
+                const formData = new FormData(detailsPane.querySelector("form"));
+
+                // Send data to the server
+                fetch("/basket", {
+                    method: "POST",
+                    body: formData,
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            // Successfully submitted details, transition to payment tab
+                            detailsTab.classList.remove("active");
+                            detailsPane.classList.remove("show", "active");
+
+                            paymentTab.disabled = false;
+                            paymentTab.classList.add("active");
+                            paymentPane.classList.add("show", "active");
+                        } else {
+                            response.text().then((text) => alert(text)); // Show error message
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("An error occurred while processing your request.");
+                    });
+            });
+
+
+            // Back to Details button logic (from Payment)
+            document.getElementById("bck-2-details").addEventListener("click", function (event) {
+                event.preventDefault();
+
+                // Activate the "Your Details" tab and pane
+                const detailsTab = document.querySelector("#profile-tab");
+                const detailsPane = document.querySelector("#profile-tab-pane");
+
+                // Deactivate "Payment" tab and pane
+                document.querySelector("#contact-tab").classList.remove("active");
+                document.querySelector("#contact-tab-pane").classList.remove("show", "active");
+
+                detailsTab.classList.add("active");
+                detailsPane.classList.add("show", "active");
+                paymentTab.disabled = true;
+            });
+
+            // Back to Order button logic (from Details)
+            document.getElementById("bck-2-order").addEventListener("click", function (event) {
+                event.preventDefault();
+
+                const orderTab = document.querySelector("#home-tab");
+                const orderPane = document.querySelector("#home-tab-pane");
+
+                document.querySelector("#profile-tab").classList.remove("active");
+                document.querySelector("#profile-tab-pane").classList.remove("show", "active");
+
+                orderTab.classList.add("active");
+                orderPane.classList.add("show", "active");
+            });
+
+        });        
+    </script>
+
+
+    <!-- script for date picker (chatGpt) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#datePicker", {
+                dateFormat: "d/m/Y", // Specify the date format
+                altInput: true,      // Show a readable format in the input field
+                altFormat: "F j, Y", // Human-friendly display
+                allowInput: true     // Allow manual input
+            });
+        });
+    </script>
+
+
+
+    <title>IYK-SANDWICHES: {% block title %}{% endblock %}</title>
+
+</head>
+
+<body>
+    <header>
+        <div class="navigation">
+            <nav class="bg-tomato border navbar navbar-expand-md navbar-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/"><span class="blue">I</span><span class="red">Y</span><span
+                            class="yellow">K</span><span class="green">-</span> <span
+                            class="orange">SANDWICHES</span></a>
+                    <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"
+                        class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar">
+                        <ul class="navbar-nav me-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/products">Our Menu</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">About us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#">Contact us</a></li>
+                        </ul>
+                        {% if session["user_id"] %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            {% if session["user_id"] == 1 %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/">
+                                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                                    <span>Admin Panel</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/basket">
+                                    <span class="icon"><ion-icon name="basket"></ion-icon>
+                                        <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">
+                                    {{ total_items }}
+                                            <span data-name="total_items" data-value="{{ total_items }}"></span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            <!-- 
+                            <button type="button" class="btn btn-dark position-relative"
+                                onclick="location.href='/basket'">
+                                Basket
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ total_items }}
+                                    <span name="total_items" value="{{ total_items }}"></span>
+                                </span>
+                            </button>
+                            -->
+                            
+                            
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+                        </ul>
+                        {% else %}
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container py-5 text-center">
+        <div class="main-content">
+            {% if get_flashed_messages() %}
+            <div class="alert alert-success mb-0 text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+            </div>
+            {% endif %}
+            {% block main %}{% endblock %}
+        </div>
+
+    </main>
+
+    <footer>
+        <div>
+            <p>
+                Iyk-sandwich Copyright &#169;
+            </p>
+
+            <form action="https://validator.w3.org/check" class="validator-form" enctype="multipart/form-data"
+                method="post" target="_blank">
+                <input name="doctype" type="hidden" value="HTML5">
+                <input name="fragment" type="hidden">
+                <label>Validator</label>
+                <div class="validate">
+                    <input class="validate-img" alt="Validate" src="/static/I_heart_validator.jpg" type="image">
+                </div>
+                <!-- https://validator.w3.org/ -->
+            </form>
+        </div>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Adapted from https://stackoverflow.com/a/10162353
+                const html = '<!DOCTYPE ' +
+                    document.doctype.name +
+                    (document.doctype.publicId ? ' PUBLIC "' + document.doctype.publicId + '"' : '') +
+                    (!document.doctype.publicId && document.doctype.systemId ? ' SYSTEM' : '') +
+                    (document.doctype.systemId ? ' "' + document.doctype.systemId + '"' : '') +
+                    '>\n' + document.documentElement.outerHTML;
+                document.querySelector('form[action="https://validator.w3.org/check"] > input[name="fragment"]').value = html;
+            });
+        </script>
+        <!-- ====== ionicons ======= -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </footer>
+</body>
+
+</html>

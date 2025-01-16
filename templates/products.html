@@ -1,0 +1,167 @@
+{% extends "layout.html" %}
+
+{% block title %}
+MENU OPTIONS
+{% endblock %}
+
+{% block main %}
+<div class="intro">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="/static/sandwich-banner-background2.jpeg" class="img-fluid rounded-start"
+                    alt="Iyk-sandwich image" style="height: 100%; width: auto;">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Menu Items</h5>
+                    <p class="card-text">Select from the list all availabe items on the menu for your sandwich portion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" style="height: 50px; margin-top: 12px;" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-danger" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+<h3>Hi {% for person in customers %} {{ person["name"] }} {% endfor %}, take a look at our menu options. </h3>
+
+
+<div class="row">
+    <div class="col-3">
+        <div id="myDIVS" class="list-group">
+            <!-- Use some jinja notation to loop through all Categories added in the category table -->
+            <a class="list-group-item list-group-item-action" href="#list-item-1">Bread type</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">Sandwich filling</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">sides</a>
+        </div>
+    </div>
+    <div class="col-9">
+        <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example"
+            tabindex="0">
+
+
+            <!-- Work on the for loops to display each category heading and the items on the menu of each category -->
+
+            <!-- define "data" in the application join tables for menuItems and category to get relevant data. -->
+
+
+            <!--****************************************************** -->
+            <div class="menu-header">
+                {% for cat in cat1 %}
+                    <h4 id="list-item-1"> {{ cat["catName"] }} </h4>
+                {% endfor %}
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-bottom: 100px;">
+                {% for item in menu %}
+                {% if item["catID"] == 1 %}
+                <div class="col">
+                    <div class="card">
+                        {% if item.image_path %}
+                        <img src="{{ item.image_path }}" class="card-img-top" alt="{{ item.name }}"
+                            style="width:100%; height:auto;">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default.jpg') }}" alt="Default Image"
+                            style="width:200px;height:200px;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item["name"] }}</h5>
+                            <p class="card-text">{{ item["description"] }}</p>
+                            <b>{{ item["price"] | pound }}</b>
+                            <form action="/basket" method="post">
+                                <input type="hidden" name="action" value="add_to_basket">
+                                <input name="id" type="hidden" value="{{ item['itemID'] }}">
+                                <button class="btn btn-dark" type="submit">Add to plate</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+
+
+
+            <div class="menu-header">
+                {% for cat in cat2 %}
+                    <h4 id="list-item-2"> {{ cat["catName"] }} </h4>
+                {% endfor %}
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-bottom: 100px;">
+                {% for item in menu %}
+                {% if item["catID"] == 2 %}
+                <div class="col">
+                    <div class="card">
+                        {% if item.image_path %}
+                        <img src="{{ item.image_path }}" class="card-img-top" alt="{{ item.name }}"
+                        style="width:100%; height:auto;">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default.jpg') }}" alt="Default Image"
+                            style="width:200px;height:200px;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item["name"] }}</h5>
+                            <p class="card-text">{{ item["description"] }}</p>
+                            <b>{{ item["price"] | pound }}</b>
+                            <form action="/basket" method="post">
+                                <input type="hidden" name="action" value="add_to_basket">
+                                <input name="id" type="hidden" value="{{ item['itemID'] }}">
+                                <button class="btn btn-dark" type="submit">Add to plate</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+
+            <div class="menu-header">
+                {% for cat in cat3 %}
+                    <h4 id="list-item-3"> {{ cat["catName"] }} </h4>
+                {% endfor %}
+            </div>
+
+            <div class="row row-cols-1 row-cols-md-3 g-4" style="margin-bottom: 100px;">
+                {% for item in menu %}
+                {% if item["catID"] == 3 %}
+                <div class="col">
+                    <div class="card custom-card">
+                        {% if item.image_path %}
+                        <img src="{{ item.image_path }}" class="card-img-top" alt="{{ item.name }}"
+                        style="width:100%; height:auto;">
+                        {% else %}
+                        <img src="{{ url_for('static', filename='images/default.jpg') }}" alt="Default Image"
+                            style="width:200px;height:200px;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item["name"] }}</h5>
+                            <p class="card-text">{{ item["description"] }}</p>
+                            <b>{{ item["price"] | pound }}</b>
+                            <form action="/basket" method="post">
+                                <input type="hidden" name="action" value="add_to_basket">
+                                <input name="id" type="hidden" value="{{ item['itemID'] }}">
+                                <button class="btn btn-dark" type="submit">Add to plate</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

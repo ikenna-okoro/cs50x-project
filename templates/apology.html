@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Apology
+{% endblock %}
+
+{% block main %}
+    <!-- https://memegen.link/ -->
+    <!-- Poor Rudolph... -->
+    <!-- https://knowyourmeme.com/photos/2971883-reaction-images -->
+    
+     
+    <img alt="{{ top }}" class="border img-fluid" src="https://api.memegen.link/images/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.gif?background=https://i.kym-cdn.com/photos/images/newsfeed/002/971/883/d78.gif&width=400" title="{{ top }}">
+{% endblock %}

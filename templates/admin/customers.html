@@ -1,0 +1,57 @@
+{% extends "/admin/layout.html" %}
+{% block title %}
+Admin - Items
+{% endblock %}
+
+{% block main %}
+
+
+
+
+<div class="details">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h1>IYK-SANDWICHES REGISTERED CUSTOMERS</h1>
+        </div>
+        <h2>All Customers</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- TODO: Loop through the database entries to display them in this table -->
+                 {% if data %}
+
+                {% for entry in data %}
+                <tr>
+                    <td> {{ loop.index }} </td>
+                    <td> {{ entry.name }} </td>
+                    <td> {{ entry.email }} </td>
+                    <td> {{ entry.address }} </td>
+                    <td> {{ entry.phoneNumber}} </td>
+                    <td id="align">
+                        <form action="/removeCustomer" method="post" id="control-btns" class="btn">
+                            <input name="id" type="hidden" value="{{ entry.customerID }}">
+                            <button type="submit">Delete Customer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="6">No entries found</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

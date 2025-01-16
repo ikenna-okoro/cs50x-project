@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Log In
+{% endblock %}
+
+{% block main %}
+<div class="user-form">
+    <form action="/login" method="post">
+        <h2 class="fw-bold text-white-50 text-uppercase">Log in</h2>
+        <p class="text-white-50 mb-5">Log in to place your order for your favorite sandwiches</p>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username"
+                placeholder="Username" type="text">
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+        </div>
+        <button class="btn btn-light credential" type="submit">Log In</button>
+        <br>
+    </form>
+    <div>
+        <p class="mb-0 text-white"> Not registered yet? <a href="/register" class="text-white-50 fw-bold">Create an account</a>
+        </p>
+    </div>
+    <p class="text-white">By creating an account you agree to our Terms of Service and Privacy Policy</p>
+
+</div>
+{% endblock %}

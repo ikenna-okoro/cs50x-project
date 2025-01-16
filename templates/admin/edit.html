@@ -1,0 +1,44 @@
+{% extends "/admin/layout.html" %}
+{% block title %}
+Admin - Items
+{% endblock %}
+
+{% block main %}
+
+
+
+    <div class="details">
+        <div class="cardHeader">
+            <h1>Edit Item</h1>
+        </div>
+
+        <!-- TODO: Create a form for users to submit a name, a month, and a day -->
+        <form action="/update" method="post" enctype="multipart/form-data">
+            {% for entry in data %}
+            <input name="id" autocomplete="off" autofocus value="{{ entry.itemID }}" type="hidden">
+            <label>Category ID:</label>
+            <input name="catID" autocomplete="off" autofocus value="{{ entry.catID }}" type="number" min="1" max="3">
+            <label>Item Name:</label>
+            <input name="name" autocomplete="off" autofocus value="{{ entry.name }}" type="text">
+            <label>Item Description:</label>
+            <input name="description" autocomplete="off" value="{{ entry.description }}" type="text">
+            <label>Item Price:</label>
+            <input name="price" autocomplete="off" value="{{ entry.price }}" type="text">
+
+            {% if entry.image_path %}
+            <img src="{{ entry.image_path }}" class="card-img-top" alt="{{ entry.name }}"
+                style="width:200px;height:200px;">
+            {% else %}
+            <img src="{{ url_for('static', filename='images/default.jpg') }}" alt="Default Image"
+                style="width:200px;height:200px;">
+            {% endif %}
+
+            {% endfor %}
+            <label for="image">Upload new Image:</label>
+            <input type="file" name="image" required>
+            <input type="submit" value="Save">
+        </form>
+    </div>
+
+
+{% endblock %}

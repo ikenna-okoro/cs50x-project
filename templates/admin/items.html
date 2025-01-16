@@ -1,0 +1,105 @@
+{% extends "/admin/layout.html" %}
+{% block title %}
+Admin - Items
+{% endblock %}
+
+{% block main %}
+
+
+
+
+<div class="details">
+    {% if get_flashed_messages() %}
+    <div class="alert alert-primary mb-0 text-center" role="alert">
+        {{ get_flashed_messages() | join(" ") }}
+    </div>
+    {% endif %}
+
+    <div class="addItems">
+        <div class="cardHeader">
+            <h1>IYK-SANDWICHES MENU ITEMS</h1>
+        </div>
+
+        <h2>Add an Item to the Menu</h2>
+        <!-- TODO: Create a form for users to submit a name, a month, and a day -->
+        <form action="/admin/items" enctype="multipart/form-data" method="post">
+            <h2>Category 1: Bread type, 2: Sandwich filling 3: Sides<h2><br>
+                    <div class="item-data">
+                        <span>
+                            <input name="catID" autocomplete="off" autofocus placeholder="Category ID" type="number"
+                                min="1" max="3" required>
+                        </span>
+                        <span>
+                            <input name="name" autocomplete="off" placeholder="Menu item name" type="text" required>
+                        </span>
+                        <span>
+                            <input name="description" autocomplete="off" placeholder="Menu item description" type="text"
+                                required>
+                        </span>
+                        <span>
+                            <input name="price" autocomplete="off" placeholder="Price" type="text" min="1" required>
+                        </span>
+                    </div>
+                    <div class="item-image">
+                        <label for="image">Upload Image:</label>
+                        <span>
+                            <input type="file" name="image" required>
+                        </span>
+                    </div>
+                    <button type="submit">Add item</button>
+        </form>
+    </div>
+
+    <div class="recentOrders">
+
+        <h2>All Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>S/N</th>
+                    <th>CatID</th>
+                    <th>name</th>
+                    <th>description</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- TODO: Loop through the database entries to display them in this table -->
+                {% if data %}
+                {% for entry in data %}
+                <tr>
+                    <td> {{ loop.index }} </td>
+                    <td> {{ entry.catID }} </td>
+                    <td> {{ entry.name }} </td>
+                    <td> {{ entry.description }} </td>
+                    <td> £{{ entry.price}} </td>
+                    <td id="align">
+                        <div class="btn">
+                            <form action="/admin/edit" method="post" id="control-btns">
+                                <input name="id" type="hidden" value="{{ entry.itemID }}">
+                                <button type="submit">Edit Item</button>
+                            </form>
+                            <form action="/removeItem" method="post" id="control-btns">
+                                <input name="id" type="hidden" value="{{ entry.itemID }}">
+                                <button type="submit">Remove Item</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                {% else %}
+                <tr>
+                    <td colspan="6">No entries found</td>
+                </tr>
+                {% endif %}
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
